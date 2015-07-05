@@ -1,0 +1,34 @@
+<VirtualHost *:80>
+   
+
+#    <IfModule mod_fastcgi.c>
+#        AddType application/x-httpd-fastphp5 .php
+#        Action application/x-httpd-fastphp5 /php5-fcgi
+#        Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_example.com
+#        FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_example.com -socket /var/run/php5-fpm_example.com.sock -pass-header Authorization
+#    </IfModule>
+
+        ServerAdmin webmaster@example.com
+        ServerName <%= @params[:server_name] %>
+ 
+        DocumentRoot <%= @params[:docroot] %>
+
+        <Directory <%= @params[:docroot] %>>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+         </Directory> 
+
+        Alias /fcgi-bin/php5-fpm /fcgi-bin-php5-fpm-<%= @params[:user_name] %>
+        FastCgiExternalServer /fcgi-bin-php5-fpm-<%= @params[:user_name] %> -socket /var/run/php-fpm-<%= @params[:user_name] %>.sock -pass-header Authorization         
+ 
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+        
+        ErrorLog /var/log/apache2/<%= @params[:server_name] %>/error.log
+        CustomLog /var/log/apache2/<%= @params[:server_name] %>/access.log combined
+
+      
+</VirtualHost>
