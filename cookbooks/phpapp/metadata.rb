@@ -8,3 +8,7 @@ version          '0.1.0'
 
 depends "apache2"
 depends "php-fpm"
+depends "mysql","4.1.2"
+depends "database"
+depends "mysql2_chef_gem"
+
